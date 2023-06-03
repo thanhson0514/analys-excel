@@ -1,15 +1,14 @@
 import { proccessData } from "./analys.js";
+import fs from "fs";
+import { PATH_OUTPUT_FILE_JSON } from "../constant/constant.js";
 
+/**
+ *
+ * @param {object[]} data
+ * @returns {void}
+ */
 export const printInfo = (data) => {
-  const { workingDayOfMonthEmployee, detailWorkForEmployee } =
-    proccessData(data);
-  const resultPrint = {};
-  for (let i = 0; i < detailWorkForEmployee.length; ++i) {
-    resultPrint[detailWorkForEmployee[i].employeeCode] = {
-      ...detailWorkForEmployee[i],
-      dayOfWorks: { ...workingDayOfMonthEmployee[i] },
-    };
-  }
-
+  const resultPrint = proccessData(data);
+  fs.writeFileSync(PATH_OUTPUT_FILE_JSON, JSON.stringify(resultPrint));
   console.log(resultPrint);
 };
